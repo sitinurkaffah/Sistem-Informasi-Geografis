@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <style>
+        #map { height: 600px; }
+    </style>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Inisialisasi peta pada koordinat yang kira-kira berada di tengah antara semua kampus
+        var map = L.map('map').setView([-6.361, 106.835], 13);
+
+        // Menambahkan layer tile dari OpenStreetMap
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // Data GeoJSON untuk beberapa kampus
+        var geojsonData = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "STT Terpadu Nurul Fikri - Kampus A",
+                        "type": "Kampus Swasta",
+                        "kota": "Kelapa Dua, Depok - Jawa Barat"
+                    },
+                    "geometry": {
+                        "coordinates": [106.8443668641514, -6.362539313114565],
+                        "type": "Point"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "STT Terpadu Nurul Fikri - Kampus B",
+                        "type": "Kampus Swasta",
+                        "kota": "Srengseng Sawah, Jakarta Selatan"
+                    },
+                    "geometry": {
+                        "coordinates": [106.8327523460354, -6.351751573956132],
+                        "type": "Point"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Universitas Indonesia",
+                        "type": "Kampus Negeri",
+                        "kota": "Depok - Jawa Barat"
+                    },
+                    "geometry": {
+                        "coordinates": [106.82724502367792, -6.36038831213486],
+                        "type": "Point"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Universitas Pancasila",
+                        "type": "Kampus Swasta",
+                        "kota": "Lenteng Agung, Jakarta Selatan"
+                    },
+                    "geometry": {
+                        "coordinates": [106.83216030759735, -6.3315827174013695],
+                        "type": "Point"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Universitas Gunadarma Kampus G - Depok",
+                        "type": "Kampus Swasta",
+                        "kota": "Kelapa Dua, Depok - Jawa Barat"
+                    },
+                    "geometry": {
+                        "coordinates": [106.84350713716897, -6.354498946539802],
+                        "type": "Point"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Politeknik Negeri Media Kreatif Jakarta",
+                        "type": "Kampus Swasta",
+                        "kota": "Srengseng Sawah, Jakarta Selatan"
+                    },
+                    "geometry": {
+                        "coordinates": [106.82714172367774, -6.347151095313738],
+                        "type": "Point"
+                    }
+                }
+            ]
+        };
+
+        // Menambahkan layer GeoJSON ke peta
+        L.geoJSON(geojsonData, {
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup('<b>' + feature.properties.name + '</b><br>' + feature.properties.type + '<br>' + feature.properties.kota);
+            }
+        }).addTo(map);
+    </script>
+</body>
+</html>
